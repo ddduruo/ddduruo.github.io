@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  输入<input type="text" value="">
+  <ul>
+
+  </ul>
+  <script>
+      var content = [
+          {
+              title: '行宫',
+              detail_text: '寥落古行宫，宫花寂寞红。白头宫女在，闲坐说玄宗。'
+          }, {
+              title: '登鹳雀楼',
+              detail_text: '白日依山尽，黄河入海流。欲穷千里目，更上一层楼。'
+          }, {
+              title: '新嫁娘词',
+              detail_text: '三日入厨下，洗手作羹汤。未谙姑食性，先遣小姑尝。'
+          }, {
+              title: '登天台',
+              detail_text: '张安迪作诗'
+          }
+      ]
+      //首先获取dom元素 在全局中获取
+      var input = document.getElementsByTagName('input')[0];
+      var ul = document.getElementsByTagName('ul')[0]; 
+      input.onclick = function(){
+             var result1 = searchMatching(input.value);
+             var disresult = displayResult(result1);
+      };
+      //2.写一个函数 能够获取 input的输入值
+      // 3. 通过inpuvalue 在content中找到 匹配项
+      function searchMatching(inputValue){
+          var result = [];
+          var  length = content.length;
+          for(var i = 0; i < length; i++){
+              var message = content[i];
+              if(message.title.indexOf(inputValue) !== -1 || message.detail_text.indexOf(inputValue) !== -1){
+                  result.push(message);
+              }
+          }
+          return result;
+      }
+      // 4.找到匹配项之后 遍历这个result 把每一个result 放在一个li标签中 并且 插入到ul标签中
+      function displayResult(result){
+          ul.innerHTML = '';
+          resultLength = result.length;
+          for(let i = 0; i < resultLength; i++ ){
+              var li = document.createElement('li');
+              var button = document.createElement('button');
+              button.innerHTML = "删除";
+              li.innerHTML = "title:" +  result[i].title + "  " + "text:" +  result[i].detail_text;
+              ul.appendChild(li);
+              ul.appendChild(button); 
+              button.onclick = function(){
+                  console.log(1);
+                  result.splice(i,1);
+                  console.log(2);
+                  displayResult(result);
+                  console.log(3);
+              }
+              
+          }
+      }
+      // //添加添加button属性 并且 可以删除当前所选的结果
+         
+  </script>
+</html>
