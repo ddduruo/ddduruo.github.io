@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>tree1</title>
+  <style>
+    #container {
+      display: flex;
+      padding: 20px;
+      width: 1000px;
+      height: 300px;
+      border: 1px solid black;
+      margin: 100px auto;
+      margin-bottom: 10px;
+      justify-content: space-between;
+    }
+
+    #child-1 {
+      display: flex;
+      padding: 20px;
+      width: 450px;
+      height: 260px;
+      border: 1px solid red;
+      justify-content: space-between;
+    }
+
+    #child-2 {
+      display: flex;
+      padding: 20px;
+      width: 170px;
+      height: 220px;
+      border: 1px solid green;
+      justify-content: space-between;
+    }
+
+    #child-3 {
+      display: flex;
+      padding: 20px;
+      width: 35px;
+      height: 180px;
+      border: 1px solid blue;
+      justify-content: space-between;
+    }
+
+    input {
+      margin-left: 100px;
+      width: 50px;
+      height: 40px;
+      font-size: 40px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <div id="child-1">
+      <div id="child-2">
+        <div id="child-3"></div>
+        <div id="child-3"></div>
+      </div>
+      <div id="child-2">
+        <div id="child-3"></div>
+        <div id="child-3"></div>
+      </div>
+    </div>
+    <div id="child-1">
+      <div id="child-2">
+        <div id="child-3"></div>
+        <div id="child-3"></div>
+      </div>
+      <div id="child-2">
+        <div id="child-3"></div>
+        <div id="child-3"></div>
+      </div>
+    </div>
+  </div>
+  <input type="button" value="中序" />
+  <input type="button" value="先序">
+  <input type="button" value="后序">
+
+
+
+  <script>
+    let btn1 = document.getElementsByTagName('input')[0];
+    let btn2 = document.getElementsByTagName('input')[1];
+    let btn3 = document.getElementsByTagName('input')[2];
+    let list = [];
+    let tree = document.getElementById('container');
+    let timer = null;
+    btn1.onclick = function () {
+      reSet();
+      inOrder(tree);
+      changeColor();
+
+    }
+
+    btn2.onclick = function () {
+      console.log(list)
+
+      reSet();
+      console.log(list)
+
+      preOrder(tree);
+      changeColor();
+    }
+
+    btn3.onclick = function () {
+      reSet();
+      posOrder(tree);
+      changeColor();
+    }
+
+    function inOrder(node) {
+      if (node) {
+        inOrder(node.firstElementChild);
+        list.push(node);
+        inOrder(node.lastElementChild);
+      }
+    }
+
+    function preOrder(node) {
+      if (node) {
+        list.push(node);
+        preOrder(node.firstElementChild);
+        preOrder(node.lastElementChild);
+      }
+    }
+
+    function posOrder(node) {
+      if (node) {
+        posOrder(node.firstElementChild);
+        posOrder(node.lastElementChild);
+        list.push(node);
+      }
+    }
+    function reSet() {
+      clearInterval(timer)
+      list = [];
+      let divs = document.getElementsByTagName('div');
+      for (let i = 0; i < divs.length; i++) {
+        divs[i].style.backgroundColor = "white";
+      }
+    }
+
+
+    function changeColor() {
+      // let count = 0;
+      // list[0].style.backgroundColor = 'blue';
+      // console.log(list)
+      // for (let i = 1; i < list.length + 1 ; i++) {
+      //   count += 1;
+      //   timer = setInterval(function () {
+      //     if (i < list.length) {
+      //       list[i - 1].style.backgroundColor = 'white';
+      //       list[i].style.backgroundColor = 'blue';
+      //     } else {
+      //       clearInterval(timer)
+      //       list[list.length - 1].style.backgroundColor = 'white';
+      //     }
+      //   }, 500)
+      // (function (list, count) {
+      //   timer = setTimeout(function () {
+          // if (i < list.length) {
+          //   list[i - 1].style.backgroundColor = 'white';
+          //   list[i].style.backgroundColor = 'blue';
+          // } else {
+          //   clearTimeout(timer)
+          //   list[list.length - 1].style.backgroundColor = 'white';
+          // }
+      //   }, 500 * count)
+      // })(list, count)
+      // *******
+      let i = 0;
+      list[i].style.backgroundColor = 'blue';
+      timer = setInterval(function () {
+        i++;
+        if (i < list.length) {
+          list[i - 1].style.backgroundColor = 'white';
+          list[i].style.backgroundColor = 'blue';
+        } else {
+          clearInterval(timer)
+          list[list.length - 1].style.backgroundColor = 'white';
+        }
+      }, 500)
+    }
+
+    function clearAllTimeout() {
+      for (var i = 1; i < 1000; i++) {
+        clearTimeout(i);
+      }
+    }
+  </script>
+</body>
+
+</html>
